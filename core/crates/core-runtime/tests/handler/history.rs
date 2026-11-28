@@ -285,7 +285,7 @@ fn mode_b_withheld_withdrawn_or_unattributed_text_cannot_supply_a_speaker() {
         &text("synthetic wording"),
     );
     runtime.process_next(&mut writer).unwrap();
-    ingest(
+    let unknown = ingest(
         &mut writer,
         &session("unproven"),
         "unknown",
@@ -298,7 +298,8 @@ fn mode_b_withheld_withdrawn_or_unattributed_text_cannot_supply_a_speaker() {
     let view = FactView::rebuild(&read, &prefix, 8, None).unwrap();
     assert!(view.mode_b_text("unknown", &access()).is_err());
     let q = FactQuery::new(&prefix, Purpose::Task, "synthetic", &Budgets::default());
-    assert!(view.mode_b_input(&known, &q, &access(), None).is_err());
+    assert_mixed_facts(&view, &q, &known, &unknown);
+
     ingest(
         &mut writer,
         &session("first"),
@@ -326,4 +327,67 @@ fn mode_b_withheld_withdrawn_or_unattributed_text_cannot_supply_a_speaker() {
     assert_eq!(writer.base_commit().unwrap(), current);
     assert_eq!(writer.next_raw().unwrap().unwrap().id, "other-session");
     assert!(view.mode_b_text("other-session", &access()).is_err());
+}
+
+// A speakerless fact is still a verified W19 hit, but cannot stand in for latest.
+fn assert_mixed_facts(
+    view: &FactView<'_, Rehearsal>,
+    query: &FactQuery,
+    known: &RecordVersion,
+    other: &RecordVersion,
+) {
+    let material = view.mode_b_input(known, query, &access(), None).unwrap();
+    let facts = &material.task_facts.projection;
+    assert_eq!(facts.status, QueryStatus::OK);
+    assert_eq!(facts.items.len(), 2);
+    for version in [known, other] {
+        assert!(
+            facts
+                .items
+                .iter()
+                .any(|item| item.source_id == version.record_id && item.content == version.content)
+        );
+    }
+    assert_eq!(material.records.len(), 1);
+    let attributed = &material.records[&known.record_id];
+    assert_eq!(&attributed.version, known);
+    assert_eq!(attributed.speaker.layers[0].principal_id, "person-a");
+    assert!(view.mode_b_input(other, query, &access(), None).is_err());
+    evidence(&format!("mixed-{}-facts.pb", other.record_id), facts);
+    eprintln!(
+        "mixed {}: {} facts, {} attributed record, unattributed latest rejected",
+        other.record_id,
+        facts.items.len(),
+        material.records.len()
+    );
+}
+
+#[test]
+fn mode_b_keeps_a_matching_utterance_as_a_fact_without_attributing_it_to_the_local_user() {
+    let root = TemporaryRoot::new().unwrap();
+    let (mut writer, cap) = initial(&root);
+    let mut runtime = handler(cap);
+    let user = session("first");
+    let direct = ingest(&mut writer, &user, "typed", "one", &text("shared words"));
+    runtime.process_next(&mut writer).unwrap();
+    let utterance = ingest(
+        &mut writer,
+        &user,
+        "spoken",
+        "two",
+        &UserUtterance {
+            schema_version: 1,
+            text: "shared words".into(),
+            lang: Lang::EN,
+            asr_confidence: 0.9,
+            duration_ms: DecimalU64(500),
+            audio_ref: None,
+        },
+    );
+    runtime.process_next(&mut writer).unwrap();
+    let reader = writer.verified_reader().unwrap();
+    let prefix = writer.base_commit().unwrap();
+    let view = FactView::rebuild(&reader, &prefix, 8, None).unwrap();
+    let query = FactQuery::new(&prefix, Purpose::Task, "shared", &Budgets::default());
+    assert_mixed_facts(&view, &query, &direct, &utterance);
 }
