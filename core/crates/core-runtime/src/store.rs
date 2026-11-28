@@ -106,6 +106,16 @@ pub fn prepare_existing_head<L: LineageKind>(
     staged: StagedEvent<L>,
     limits: Limits,
 ) -> Result<ExistingPreparation<L>> {
+    prepare_with_author(store, ticket, staged, None, limits)
+}
+
+pub(crate) fn prepare_with_author<L: LineageKind>(
+    store: &Store<L>,
+    ticket: ReadTicket<L>,
+    staged: StagedEvent<L>,
+    author: Option<&LocalUserBinding>,
+    limits: Limits,
+) -> Result<ExistingPreparation<L>> {
     check(
         crate::same(ticket.binding(), &staged.binding, limits)?,
         "ticket is not the staged computation",
@@ -147,7 +157,13 @@ pub fn prepare_existing_head<L: LineageKind>(
     let theta = theta_pin.reference().clone();
     pins.push(theta_pin);
     let status = staged.status.value();
-    let audit = pin(store, &status, &mut pins)?;
+    let mut audit_refs = vec![pin(store, &status, &mut pins)?];
+    if let Some(user) = author
+        && let Some(layer) =
+            crate::local_text::author_layer(store, &ticket, &staged.event, user, &mut pins)?
+    {
+        audit_refs.push(pin(store, &layer, &mut pins)?);
+    }
     let mut accepted = vec![];
     let mut concepts = vec![];
     if let Some(z) = &staged.semantic {
@@ -184,7 +200,7 @@ pub fn prepare_existing_head<L: LineageKind>(
         anchor_time_ns: DecimalU64(staged.time.ns()),
         staged_concepts: concepts,
         accepted_results: accepted,
-        audit_refs: vec![audit],
+        audit_refs,
         event_binding: Some(staged.binding),
         activity_commit: None,
         staged_ledger: vec![],
@@ -195,7 +211,7 @@ pub fn prepare_existing_head<L: LineageKind>(
         pins,
     })
 }
-fn pin<L: LineageKind, T: core_types::WireMessage>(
+pub(crate) fn pin<L: LineageKind, T: core_types::WireMessage>(
     store: &Store<L>,
     value: &T,
     pins: &mut Vec<PreparedObject<L>>,

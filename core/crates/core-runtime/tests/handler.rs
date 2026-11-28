@@ -102,6 +102,9 @@ fn failed_publication_keeps_d_for_reopen_then_commits_once_from_initial_root() {
     assert!(handler.process_next(&mut writer).unwrap().is_empty());
 }
 
+#[path = "handler/history.rs"]
+mod history;
+
 #[cfg(windows)]
 #[path = "handler/windows.rs"]
 mod windows;

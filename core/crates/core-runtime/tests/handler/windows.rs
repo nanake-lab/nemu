@@ -30,9 +30,8 @@ async fn authenticated_pipe_settlement_and_restart_match_the_committed_q() {
             let cap = writer.take_commit_capability().unwrap();
             (writer, cap)
         });
-        let local =
-            authority::LocalAuthority::open(&root.path().join("auth.sqlite"), sid, limits())
-                .unwrap();
+        let path = root.path().join("auth.sqlite");
+        let local = authority::LocalAuthority::open(&path, sid, limits()).unwrap();
         let handler =
             RehearsalHandler::new(cap, local, inputs, limits(), SpeechMode::B_REMOTE_PROJECTED);
         let token = TerminalToken::load_protected(&token_path).unwrap();
@@ -93,6 +92,62 @@ async fn authenticated_pipe_settlement_and_restart_match_the_committed_q() {
             assert!(store.next_raw().unwrap().is_none());
             let tx = reader.event_snapshot(&head).unwrap();
             assert_eq!(tx.binding.event_id, "host-1");
+            let prefix = store.base_commit().unwrap();
+            let view = fact_view::FactView::rebuild(&reader, &prefix, 8, None).unwrap();
+            let access = fact_view::Access {
+                allowed: true,
+                ..Default::default()
+            };
+            let prior = view.mode_b_text("host-0", &access).unwrap();
+            let latest = view.mode_b_text("host-1", &access).unwrap();
+            let query = fact_view::FactQuery::new(
+                &prefix,
+                fact_view::Purpose::Task,
+                &latest.text,
+                &fact_view::Budgets::default(),
+            );
+            let material = view
+                .mode_b_input(&latest.version, &query, &access, None)
+                .unwrap();
+            assert_eq!(material.task_facts.projection.history_prefix, prefix);
+            assert_eq!(latest.speaker.governance, head);
+            let user = |record: &fact_view::ModeBText| {
+                reader
+                    .read::<LocalUserBinding>(&record.speaker.layers[0].identity_evidence)
+                    .unwrap()
+            };
+            let earlier = user(&prior);
+            let later = user(&latest);
+            assert_ne!(earlier.session_id, later.session_id);
+            assert_eq!(earlier.principal_id, later.principal_id);
+            // Independently compare both committed bindings with the original
+            // service rows across the disconnect; same-principal alone is weak.
+            let issued = rusqlite::Connection::open_with_flags(
+                &path,
+                rusqlite::OpenFlags::SQLITE_OPEN_READ_ONLY,
+            )
+            .unwrap();
+            for binding in [earlier, later] {
+                let matches: bool = issued
+                    .query_row(
+                        "SELECT EXISTS(SELECT 1 FROM local_auth_v1 WHERE record_id=?1
+                     AND principal_id=?2 AND session_id=?3 AND installation_id=?4)",
+                        rusqlite::params![
+                            binding.authentication_record_id,
+                            binding.principal_id,
+                            binding.session_id,
+                            binding.installation_id
+                        ],
+                        |row| row.get(0),
+                    )
+                    .unwrap();
+                assert!(matches);
+            }
+            assert_eq!(prior.h_position, 1);
+            assert_eq!(latest.h_position, 3); // One filtered redelivery between accepted events.
+            eprintln!(
+                "authenticated pipe: recovered author on first event, second session shares principal; H positions 1 and 3, frontier={prefix}"
+            );
             reader.read::<InitialRuntimeRoot>(&tx.staged_q).unwrap()
         };
         if let Some(target) = std::env::var_os("NEMU_P5_53_EVIDENCE_DIR") {
