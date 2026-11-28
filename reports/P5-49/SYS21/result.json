@@ -1,0 +1,12 @@
+{
+  "id": "SYS21",
+  "result": "passed",
+  "profile": "synthetic",
+  "base": "ecee0b0ef5131a09de95ef15cc16a00706519a8d",
+  "commands": ["pnpm test:core-contracts", "python core/contracts/check_compat.py --ref origin/main"],
+  "languages": ["Rust", "Python", "TypeScript"],
+  "conformance_per_language": {"accepted": 5147, "rejected": 17615, "total": 22762},
+  "official_protobuf_vectors": 921,
+  "directed_per_language": {"irl_codec_and_upload": 220, "unknown_version": "rejected", "binary64_nan": "rejected", "canonical_count_overflow": "rejected"},
+  "not_run": ["P5-07 mutual OS authentication", "SYS02", "P5-07 recorded transport replay"]
+}

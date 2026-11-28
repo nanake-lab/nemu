@@ -1,0 +1,55 @@
+syntax = "proto3";
+package nemu.echo.v1;
+import "base.proto";
+import "permission.proto";
+
+// ADR 0049: the empty H, L and processed U have distinct canonical identities.
+enum EmptyPrefixKind { EMPTY_PREFIX_UNSPECIFIED = 0; EMPTY_HISTORY = 1; EMPTY_CHANGE_LEDGER = 2; EMPTY_INGRESS_DECISIONS = 3; }
+
+// @message echo.empty-prefix-root | ADR 0049; v2.0 §§2.4–2.5,13; S §§7–8
+message EmptyPrefixRoot {
+  optional uint32 schema_version = 1; // required
+  optional EmptyPrefixKind kind = 2; // required
+}
+
+// @message echo.initial-runtime-root | ADR 0049; ADR 0010 §§2–5; S §21
+message InitialRuntimeRoot {
+  // A present field names the bound implementation; startup checks actual local capabilities.
+  optional uint32 schema_version = 1; // required
+  optional VersionedEnvironmentV2 environment = 2; // required
+  optional ObjectRef irl = 3; // optional
+  optional ObjectRef appraiser = 4; // optional
+  optional ObjectRef matcher = 5; // optional
+  optional ObjectRef fast = 6; // optional
+  optional ObjectRef growth = 7; // optional
+  optional ObjectRef dynamics = 8; // optional
+  optional ObjectRef compiler = 9; // optional
+}
+
+// @message echo.birth-name-record | ADR 0049; v2.0 §§2.3,13; ADR 0047
+message BirthNameRecord {
+  optional uint32 schema_version = 1; // required
+  optional string record_id = 2; // required,nonempty
+  optional string given_name = 3; // required,nonempty
+  optional ObjectRef manifest = 4; // required
+  optional LocalUserBinding caretaker = 5; // required
+  optional ObjectRef signature_evidence = 6; // required
+}
+
+// @message echo.initial-publication | ADR 0049; v2.0 §§2,13–14; S §§7–8
+message InitialPublication {
+  // Separate parentless operation. No fake event ticket, clock sample or parent.
+  // L/U are the unique EmptyPrefixRoot values for their roles. D may already have pending input.
+  optional uint32 schema_version = 1; // required
+  optional string store_id = 2; // required,nonempty
+  optional string branch_id = 3; // required,nonempty
+  optional LineageHeaderV2 header = 4; // required
+  optional ObjectRef x = 5; // required
+  optional ObjectRef r = 6; // required
+  optional ObjectRef theta = 7; // required
+  optional InitialRuntimeRoot q = 8; // required
+  oneof history { // required
+    EmptyPrefixRoot empty_history = 9; // optional
+    BirthNameRecord birth = 10; // optional
+  }
+}

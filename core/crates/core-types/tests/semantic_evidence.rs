@@ -9,6 +9,8 @@ use core_types::{
 use serde::de::DeserializeOwned;
 use serde_json::{Value, json};
 
+#[path = "semantic_evidence/irl_adoption.rs"]
+mod irl_adoption;
 #[path = "semantic_evidence/resolved.rs"]
 mod resolved;
 

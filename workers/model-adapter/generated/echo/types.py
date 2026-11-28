@@ -1125,6 +1125,43 @@ class IrlPipeFrame:
     graph: ObjectRef | None
     output: IrlMaterial | None
 @dataclass(frozen=True)
+class IrlServiceResponse:
+    schema_version: int
+    raw: ObjectRef
+    returned_model: str | None
+    provider_revision: str | None
+    finish_reason: str | None
+    usage: ObjectRef | None
+@dataclass(frozen=True)
+class IrlRemoteAttempt:
+    schema_version: int
+    status: RemoteAttemptStatus
+    format: ObjectRef
+    sent_request: ObjectRef | None
+    response: IrlServiceResponse | None
+@dataclass(frozen=True)
+class IrlProducer:
+    schema_version: int
+    link: IrlPipeLink
+    call: IrlCall
+    delegation: IrlDelegation
+    output: ObjectRef
+    neutral_input: ObjectRef | None
+    isolation: ObjectRef | None
+    executed_model: ObjectRef | None
+    remote: IrlRemoteAttempt | None
+@dataclass(frozen=True)
+class IrlCandidateReturn:
+    schema_version: int
+    frame: IrlPipeFrame
+    producer: IrlProducer
+@dataclass(frozen=True)
+class IrlAdoptionLink:
+    schema_version: int
+    candidate_return: ObjectRef
+    candidate: ObjectRef
+    stage: ObjectRef
+@dataclass(frozen=True)
 class JHookBinding:
     schema_version: int
     carrier: ObjectRef

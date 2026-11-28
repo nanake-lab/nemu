@@ -2866,6 +2866,73 @@ pub r#graph: Option<ObjectRef>,
 pub r#output: Option<IrlMaterial>,
 }
 impl super::WireMessage for IrlPipeFrame {const NAME: &'static str = "IrlPipeFrame";}
+/// ADR 0046 service metadata accompanies received bytes only; frozen tag `echo.irl-service-response`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct IrlServiceResponse {
+pub r#schema_version: u32,
+pub r#raw: ObjectRef,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#returned_model: Option<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#provider_revision: Option<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#finish_reason: Option<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#usage: Option<ObjectRef>,
+}
+impl super::WireMessage for IrlServiceResponse {const NAME: &'static str = "IrlServiceResponse";}
+/// ADR 0051 and ADR 0046 actual application bytes, without credentials; frozen tag `echo.irl-remote-attempt`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct IrlRemoteAttempt {
+pub r#schema_version: u32,
+pub r#status: RemoteAttemptStatus,
+pub r#format: ObjectRef,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#sent_request: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#response: Option<IrlServiceResponse>,
+}
+impl super::WireMessage for IrlRemoteAttempt {const NAME: &'static str = "IrlRemoteAttempt";}
+/// ADR 0051 authenticated producer observation for a completed output; frozen tag `echo.irl-producer`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct IrlProducer {
+pub r#schema_version: u32,
+pub r#link: IrlPipeLink,
+pub r#call: IrlCall,
+pub r#delegation: IrlDelegation,
+pub r#output: ObjectRef,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#neutral_input: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#isolation: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#executed_model: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#remote: Option<IrlRemoteAttempt>,
+}
+impl super::WireMessage for IrlProducer {const NAME: &'static str = "IrlProducer";}
+/// ADR 0051 worker returns the candidate frame and its producer observation; frozen tag `echo.irl-candidate-return`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct IrlCandidateReturn {
+pub r#schema_version: u32,
+pub r#frame: IrlPipeFrame,
+pub r#producer: IrlProducer,
+}
+impl super::WireMessage for IrlCandidateReturn {const NAME: &'static str = "IrlCandidateReturn";}
+/// ADR 0051 core transaction binds the return to the candidate and stage; frozen tag `echo.irl-adoption-link`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct IrlAdoptionLink {
+pub r#schema_version: u32,
+pub r#candidate_return: ObjectRef,
+pub r#candidate: ObjectRef,
+pub r#stage: ObjectRef,
+}
+impl super::WireMessage for IrlAdoptionLink {const NAME: &'static str = "IrlAdoptionLink";}
 /// O 13.1-13.2; ADR 0036; frozen tag `echo.j-hook-binding`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -5838,6 +5905,11 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "IrlDispatch" => super::verify_typed::<IrlDispatch>(value, limits),
 "IrlDelegation" => super::verify_typed::<IrlDelegation>(value, limits),
 "IrlPipeFrame" => super::verify_typed::<IrlPipeFrame>(value, limits),
+"IrlServiceResponse" => super::verify_typed::<IrlServiceResponse>(value, limits),
+"IrlRemoteAttempt" => super::verify_typed::<IrlRemoteAttempt>(value, limits),
+"IrlProducer" => super::verify_typed::<IrlProducer>(value, limits),
+"IrlCandidateReturn" => super::verify_typed::<IrlCandidateReturn>(value, limits),
+"IrlAdoptionLink" => super::verify_typed::<IrlAdoptionLink>(value, limits),
 "JHookBinding" => super::verify_typed::<JHookBinding>(value, limits),
 "JDirectionVector" => super::verify_typed::<JDirectionVector>(value, limits),
 "JDirection" => super::verify_typed::<JDirection>(value, limits),
