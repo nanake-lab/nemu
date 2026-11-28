@@ -136,7 +136,14 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
 
     pub(crate) fn finish_progress(&mut self, mut checked: CheckedProgress<L>) -> Result<()> {
         self.store.accept_publication(&mut checked.reader)?;
+        self.state = match checked.reader.current_snapshot()? {
+            Some(head) => self.handler.committed_run_state(&checked.reader, &head)?,
+            None => None,
+        };
         self.receipt_reader = Some(checked.reader);
+        for id in self.connections.keys().copied().collect::<Vec<_>>() {
+            self.send_state(id)?;
+        }
         if let Some((event, receipt)) = checked.settlement {
             return self.deliver(event.raw_log_position.0, &event, receipt);
         }
@@ -191,7 +198,15 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
         )
         .map_err(|_| Error::Contract)?;
         c.uploads.release(input);
-        if c.output.try_send(reply).is_err() || close {
+        if c.output
+            .try_send(
+                reply
+                    .protobuf_bytes(self.config.frames.encoding)
+                    .map_err(|_| Error::Contract)?,
+            )
+            .is_err()
+            || close
+        {
             self.close(id);
         }
         Ok(())

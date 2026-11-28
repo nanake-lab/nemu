@@ -1,4 +1,5 @@
 //! Single-writer actor: connection tasks have no Store, token or business access.
+pub use crate::downlink::TerminalOutput;
 use crate::{
     Error, Result, TerminalToken,
     connection::{Connection, Input, Pending},
@@ -57,6 +58,9 @@ pub struct GatewayConfig {
     pub session_lifetime: Duration,
 }
 pub struct Gateway<L: LineageKind, H: CoreHandler<L>> {
+    pub(crate) state: Option<RunStateV2>,
+    output_tx: tokio::sync::mpsc::Sender<(String, TerminalOutput)>,
+    output_rx: tokio::sync::mpsc::Receiver<(String, TerminalOutput)>,
     pub(crate) store: Store<L>,
     pub(crate) handler: H,
     pub(crate) config: GatewayConfig,
@@ -132,7 +136,11 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
             .sum();
         let audit_blocked = records.len() >= config.audit.max_records as usize
             || bytes >= config.audit.max_bytes as usize;
+        let (output_tx, output_rx) = tokio::sync::mpsc::channel(config.max_pending_requests);
         Ok(Self {
+            state: None,
+            output_tx,
+            output_rx,
             store,
             handler,
             installations,
@@ -168,6 +176,10 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
     }
     pub fn store(&self) -> &Store<L> {
         &self.store
+    }
+    /// The trusted producer addresses the initiating authenticated session.
+    pub fn output_sender(&self) -> tokio::sync::mpsc::Sender<(String, TerminalOutput)> {
+        self.output_tx.clone()
     }
     pub fn handler_mut(&mut self) -> &mut H {
         &mut self.handler
@@ -280,6 +292,7 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
         let result = async { loop {
             let step: Result<()> = tokio::select! {
                 _ = &mut shutdown => break Ok(()),
+                Some((session, message)) = self.output_rx.recv() => self.send_output(&session, message),
                 accept = listener.accept_owned() => match accept {
                     Ok(stream) => {
                         if tasks.len() >= self.config.max_connections {
@@ -287,7 +300,7 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
                             drop(stream);
                         } else {
                             sequence = sequence.checked_add(1).ok_or(Error::Rejected("connection sequence exhausted"))?;
-                            tasks.spawn(crate::network::connection(stream.into_inner(), self.config.frames, sequence, tx.clone()));
+                            tasks.spawn(crate::network::connection(stream.into_inner(), self.config.frames, sequence, self.config.max_pending_requests, tx.clone()));
                         }
                         Ok(())
                     }

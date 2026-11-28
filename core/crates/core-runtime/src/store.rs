@@ -51,6 +51,13 @@ fn committed_state<L: LineageKind>(
     let reference = reader.current_snapshot()?.ok_or(Error::Rejected(
         "genesis/bootstrap publication contract required",
     ))?;
+    let read_q = |q: &ObjectRef| -> core_store::Result<Option<InitialRuntimeRoot>> {
+        if q.object_type == "echo.initial-runtime-root" {
+            reader.read(q).map(Some)
+        } else {
+            Ok(None)
+        }
+    };
     let (x, r, theta, initial_q) = match reference.object_type.as_str() {
         "echo.initial-publication" => {
             let root = reader.read::<InitialPublication>(&reference)?;
@@ -58,11 +65,21 @@ fn committed_state<L: LineageKind>(
         }
         "echo.transaction-v4" => {
             let tx = reader.read::<CoreTransactionV4>(&reference)?;
-            (tx.staged_x, tx.staged_r, tx.staged_theta, None)
+            (
+                tx.staged_x,
+                tx.staged_r,
+                tx.staged_theta,
+                read_q(&tx.staged_q)?,
+            )
         }
         _ => {
             let tx = reader.event_snapshot(&reference)?;
-            (tx.staged_x, tx.staged_r, tx.staged_theta, None)
+            (
+                tx.staged_x,
+                tx.staged_r,
+                tx.staged_theta,
+                read_q(&tx.staged_q)?,
+            )
         }
     };
     Ok((
@@ -98,7 +115,7 @@ pub fn prepare_existing_head<L: LineageKind>(
         staged.trace.last() == Some(&Step::Ledger),
         "computation incomplete",
     )?;
-    let old = store.current_manifest()?.ok_or(Error::Rejected(
+    let old = store.published_roots()?.ok_or(Error::Rejected(
         "genesis/bootstrap publication contract required",
     ))?;
     // No invented representation for a changed aggregate L or runtime Q.
@@ -126,7 +143,7 @@ pub fn prepare_existing_head<L: LineageKind>(
     pins.push(r_pin);
     // No growth here: preserve the committed reference version as well as all
     // estimator bytes (ADR 0029); Store::prepare enforces the successor gate.
-    let theta_pin = store.prepare(&staged.state.theta, &old.staged_theta.resource_version)?;
+    let theta_pin = store.prepare(&staged.state.theta, &old.theta.resource_version)?;
     let theta = theta_pin.reference().clone();
     pins.push(theta_pin);
     let status = staged.status.value();
@@ -160,9 +177,9 @@ pub fn prepare_existing_head<L: LineageKind>(
         staged_x: x,
         staged_r: r,
         staged_theta: theta,
-        staged_l: old.staged_l,
-        staged_q: old.staged_q,
-        staged_u: old.staged_u,
+        staged_l: old.l,
+        staged_q: old.q,
+        staged_u: old.u,
         processed_position: DecimalU64(position),
         anchor_time_ns: DecimalU64(staged.time.ns()),
         staged_concepts: concepts,
@@ -206,26 +223,10 @@ impl<L: LineageKind> StageSet<L> {
             "generation before committed anchor",
         )?;
         if L::KIND == Lineage::REHEARSAL || self.parts.j.is_none() || self.parts.f.is_none() {
-            let mut status = Status::default();
-            if let Some(q) = initial_q {
-                for (stage, state) in [
-                    (q.irl, RunStatus::IRL_DEGRADED),
-                    (q.appraiser, RunStatus::A_DEGRADED),
-                    (q.matcher, RunStatus::M_DEGRADED),
-                ] {
-                    if stage.is_none() {
-                        status.add(state, FailureCode::DEPENDENCY_FAULT);
-                    }
-                }
-            }
-            status.add(
-                RunStatus::CORE_UNMODULATED,
-                FailureCode::MODULATION_DISABLED,
-            );
-            if L::KIND == Lineage::REHEARSAL {
-                status.add(RunStatus::NO_GROWTH, FailureCode::GROWTH_OFF_REHEARSAL);
-            }
-            return Ok(Emission::Unmodulated(status));
+            return Ok(Emission::Unmodulated(Status::unmodulated(
+                L::KIND,
+                initial_q.as_ref(),
+            )));
         }
         // Reading a committed x alone does not prove that Q permits a new
         // generation. Do not produce nonzero m until Q publication is defined.

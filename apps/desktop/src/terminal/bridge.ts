@@ -23,8 +23,7 @@ function enumName(values: Readonly<Record<string, number>>, value: number): stri
   return Object.keys(values).find((name) => values[name] === value) ?? String(value);
 }
 
-/** Application-side consumers for existing IDL messages. P5-53 supplies the
- * transport demultiplexer; the current gateway sends only paired replies. */
+/** Consume the generated messages delivered by the authenticated terminal connection. */
 export function bindTerminal(
   bus: AppBus,
   terminal: Pick<TerminalClient, 'enqueue' | 'sendControl'>,
@@ -119,7 +118,8 @@ export function bindTerminal(
       const end = outputEnd.parse(input);
       const old = outputs.get(end.output_id);
       outputs.set(end.output_id, { last: old?.last ?? -1n, stopped: true });
-      if (end.reason === OutputEndReason!.ERROR) report('Echo Core reported an output failure.');
+      if (end.reason === OutputEndReason!.ERROR)
+        report('Echo Core reported an output failure (' + end.output_id + ').');
       if (!old?.stopped) {
         publish('output.state', {
           outputId: end.output_id,

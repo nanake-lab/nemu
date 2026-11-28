@@ -333,26 +333,17 @@ impl<L: LineageKind> Store<L> {
             &serde_json::to_value(&binding.environment)?,
             &mut required,
         )?;
-        if let Some(old) = self.current_manifest()? {
-            let x =
-                FastStateSnapshotV2::from_canonical(&self.objects.read(&old.staged_x)?, limits)?;
-            let r = RSnapshotV3::from_canonical(&self.objects.read(&old.staged_r)?, limits)?;
-            let theta = crate::theta::writable(&self.objects, &old.staged_theta)?;
+        if let Some(old) = self.published_roots()? {
+            let x = FastStateSnapshotV2::from_canonical(&self.objects.read(&old.x)?, limits)?;
+            let r = RSnapshotV3::from_canonical(&self.objects.read(&old.r)?, limits)?;
+            let theta = crate::theta::writable(&self.objects, &old.theta)?;
             require(
                 binding.x_revision == x.revision
                     && binding.r_revision == r.revision
                     && binding.theta_revision == theta.revision,
                 "stale state revisions",
             )?;
-            required.extend([
-                old.staged_h,
-                old.staged_x,
-                old.staged_r,
-                old.staged_theta,
-                old.staged_l,
-                old.staged_q,
-                old.staged_u,
-            ]);
+            required.extend([old.h, old.x, old.r, old.theta, old.l, old.q, old.u]);
         }
         for r in required {
             require(binding.read_set.contains(&r), "incomplete read set")?;

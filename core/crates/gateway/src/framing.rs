@@ -123,6 +123,12 @@ impl<S: AsyncWrite + Unpin> Framed<S> {
                 .protobuf_bytes(self.config.encoding)
                 .map_err(|_| Error::Contract)?,
         );
+        self.write_bytes(&bytes).await
+    }
+    pub(crate) async fn write_bytes(&mut self, bytes: &[u8]) -> Result<()> {
+        if self.failed || bytes.len() > self.config.encoding.max_bytes {
+            return Err(Error::Rejected("invalid outbound frame"));
+        }
         let size = u32::try_from(bytes.len()).map_err(|_| Error::Contract)?;
         if size == 0 {
             return Err(Error::Contract);
@@ -130,7 +136,7 @@ impl<S: AsyncWrite + Unpin> Framed<S> {
         self.failed = true;
         let result = tokio::time::timeout(self.config.deadline, async {
             self.stream.write_all(&size.to_le_bytes()).await?;
-            self.stream.write_all(&bytes).await?;
+            self.stream.write_all(bytes).await?;
             self.stream.flush().await?;
             Ok(())
         })

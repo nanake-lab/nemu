@@ -10,6 +10,7 @@ mod error;
 mod fault;
 mod ingress;
 mod initial;
+pub use initial::PublishedRoots;
 mod lineage;
 mod manifest;
 mod migration;

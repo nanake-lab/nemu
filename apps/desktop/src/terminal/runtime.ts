@@ -41,7 +41,7 @@ export function startChat(bus: AppBus, panel: BrowserWindow, userData: string, i
     try {
       client = new TerminalClient(new ChatOutbox(join(userData, 'chat-outbox')), setStatus);
       bridge = bindTerminal(bus, client, setStatus);
-      client.start();
+      client.start(bridge);
     } catch {
       setStatus('Could not open the terminal outbox');
     }
