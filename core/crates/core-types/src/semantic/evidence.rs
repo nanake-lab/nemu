@@ -146,7 +146,7 @@ pub fn check_semantic_evidence_message(name: &str, v: &Value, limits: Limits) ->
 }
 
 // Verify the immutable object actually supplied by the trusted reader.
-fn bound_object(
+pub(crate) fn bound_object(
     schema: &Schema,
     name: &str,
     v: &Value,

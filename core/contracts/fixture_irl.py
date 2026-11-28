@@ -65,7 +65,44 @@ def sample_irl(name: str, seed: int) -> dict[str, Any]:
         dict(output=material),
         dict(output=material),
     ]
+    response = version | dict(
+        raw=object_ref(b"response"), returned_model="fixture-return"
+    )
+    remote = version | dict(
+        status=1,
+        format=object_ref(b"format"),
+        sent_request=object_ref(b"request"),
+        response=response,
+    )
+    producer = version | dict(
+        link=delegation["link"],
+        call=call,
+        delegation=delegation,
+        output=ref,
+        neutral_input=object_ref(b"neutral input"),
+        isolation=object_ref(b"neutral"),
+    )
+    if delegation["link"] == 2:
+        producer["remote"] = remote
+    else:
+        producer["executed_model"] = delegation["local_model"]
+    candidate_frame = version | dict(
+        operation=11,
+        call=delegation["parent"],
+        graph=object_ref(b"graph"),
+        output=material,
+    )
     samples: dict[str, dict[str, Any]] = {
+        "IrlServiceResponse": response,
+        "IrlRemoteAttempt": remote,
+        "IrlProducer": producer,
+        "IrlCandidateReturn": version | dict(frame=candidate_frame, producer=producer),
+        "IrlAdoptionLink": version
+        | dict(
+            candidate_return=object_ref(b"return"),
+            candidate=object_ref(b"candidate"),
+            stage=object_ref(b"stage"),
+        ),
         "IrlPipeAuth": version
         | dict(
             protocol_version=1,
@@ -101,7 +138,24 @@ def illegal_irl() -> list[dict[str, Any]]:
             request=request("IrlPipeFrame", sample_irl("IrlPipeFrame", seed) | changes),
         )
 
+    attempt = sample_irl("IrlRemoteAttempt", 0)
+    local = sample_irl("IrlProducer", 1)
     return [
+        dict(
+            label="unsent-irl-with-service-reply",
+            request=request("IrlRemoteAttempt", attempt | dict(status=6)),
+        ),
+        dict(
+            label="completed-irl-without-response",
+            request=request(
+                "IrlRemoteAttempt",
+                {k: v for k, v in attempt.items() if k != "response"},
+            ),
+        ),
+        dict(
+            label="adapter-claiming-remote-execution",
+            request=request("IrlProducer", local | dict(remote=attempt)),
+        ),
         bad(
             "not-sent-with-receipt",
             6,
