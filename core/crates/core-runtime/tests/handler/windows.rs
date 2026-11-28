@@ -11,57 +11,6 @@ mod authority;
 #[path = "../../../nemu-core/src/deployment.rs"]
 mod deployment;
 
-// Exercise the production SID issuer and its durable authentication rows without
-// changing the host executable. The disconnected first session is looked up
-// again on restart, before the client can submit the next input.
-struct TestAuthority {
-    issuer: authority::LocalAuthority,
-    issued: rusqlite::Connection,
-}
-impl CoreHandler<Rehearsal> for TestAuthority {
-    fn authenticated(
-        &mut self,
-        store: &mut Store<Rehearsal>,
-        session: &TerminalSession,
-    ) -> gateway::Result<Decision<()>> {
-        self.issuer.authenticated(store, session)
-    }
-
-    fn authorize_event(
-        &mut self,
-        store: &Store<Rehearsal>,
-        session: &TerminalSession,
-        event: &TerminalEvent,
-        provenance: &SourceMetadata,
-    ) -> Decision<Grants> {
-        self.issuer
-            .authorize_event(store, session, event, provenance)
-    }
-
-    fn local_text_author(
-        &self,
-        event: &EventEnvelope,
-    ) -> gateway::Result<Option<LocalUserBinding>> {
-        self.issued
-            .query_row(
-                "SELECT record_id, principal_id, installation_id, session_id FROM local_auth_v1
-             WHERE session_id=?1 AND installation_id=?2",
-                [&event.session, &event.device],
-                |row| {
-                    Ok(LocalUserBinding {
-                        schema_version: 1,
-                        authentication_record_id: row.get(0)?,
-                        principal_id: row.get(1)?,
-                        installation_id: row.get(2)?,
-                        session_id: row.get(3)?,
-                    })
-                },
-            )
-            .map(Some)
-            .map_err(|_| gateway::Error::Rejected("missing local issuer record"))
-    }
-}
-
 #[tokio::test]
 async fn authenticated_pipe_settlement_and_restart_match_the_committed_q() {
     let root = TemporaryRoot::new().unwrap();
@@ -82,14 +31,7 @@ async fn authenticated_pipe_settlement_and_restart_match_the_committed_q() {
             (writer, cap)
         });
         let path = root.path().join("auth.sqlite");
-        let local = TestAuthority {
-            issuer: authority::LocalAuthority::open(&path, sid, limits()).unwrap(),
-            issued: rusqlite::Connection::open_with_flags(
-                &path,
-                rusqlite::OpenFlags::SQLITE_OPEN_READ_ONLY,
-            )
-            .unwrap(),
-        };
+        let local = authority::LocalAuthority::open(&path, sid, limits()).unwrap();
         let handler =
             RehearsalHandler::new(cap, local, inputs, limits(), SpeechMode::B_REMOTE_PROJECTED);
         let token = TerminalToken::load_protected(&token_path).unwrap();
@@ -174,8 +116,33 @@ async fn authenticated_pipe_settlement_and_restart_match_the_committed_q() {
                     .read::<LocalUserBinding>(&record.speaker.layers[0].identity_evidence)
                     .unwrap()
             };
-            assert_ne!(user(&prior).session_id, user(&latest).session_id);
-            assert_eq!(user(&prior).principal_id, user(&latest).principal_id);
+            let earlier = user(&prior);
+            let later = user(&latest);
+            assert_ne!(earlier.session_id, later.session_id);
+            assert_eq!(earlier.principal_id, later.principal_id);
+            // Independently compare both committed bindings with the original
+            // service rows across the disconnect; same-principal alone is weak.
+            let issued = rusqlite::Connection::open_with_flags(
+                &path,
+                rusqlite::OpenFlags::SQLITE_OPEN_READ_ONLY,
+            )
+            .unwrap();
+            for binding in [earlier, later] {
+                let matches: bool = issued
+                    .query_row(
+                        "SELECT EXISTS(SELECT 1 FROM local_auth_v1 WHERE record_id=?1
+                     AND principal_id=?2 AND session_id=?3 AND installation_id=?4)",
+                        rusqlite::params![
+                            binding.authentication_record_id,
+                            binding.principal_id,
+                            binding.session_id,
+                            binding.installation_id
+                        ],
+                        |row| row.get(0),
+                    )
+                    .unwrap();
+                assert!(matches);
+            }
             assert_eq!(prior.h_position, 1);
             assert_eq!(latest.h_position, 3); // One filtered redelivery between accepted events.
             eprintln!(

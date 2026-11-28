@@ -2,7 +2,7 @@ use core_store::{Rehearsal, Store};
 use core_types::generated::IngressReason;
 use core_types::{
     contract::Limits,
-    generated::{LocalUserBinding, SourceMetadata, TerminalEvent, TerminalSession},
+    generated::{EventEnvelope, LocalUserBinding, SourceMetadata, TerminalEvent, TerminalSession},
     permission::check_user_text_source,
     scalar::hex,
 };
@@ -10,7 +10,7 @@ use gateway::{
     Grants,
     hooks::{CoreHandler, Decision},
 };
-use rusqlite::{Connection, OpenFlags, params};
+use rusqlite::{Connection, OpenFlags, OptionalExtension, params};
 use sha2::{Digest, Sha256};
 use std::path::Path;
 
@@ -62,11 +62,11 @@ impl LocalAuthority {
         Ok(())
     }
 
-    fn binding(&self, session: &TerminalSession) -> rusqlite::Result<LocalUserBinding> {
+    fn binding(&self, session_id: &str, installation: &str) -> rusqlite::Result<LocalUserBinding> {
         self.records.query_row(
             "SELECT record_id, principal_id, installation_id, session_id
-            FROM local_auth_v1 WHERE session_id=?1 AND principal_id=?2 AND installation_id=?3",
-            params![session.session_id, self.principal, session.installation_id],
+            FROM local_auth_v1 WHERE session_id=?1 AND installation_id=?2",
+            params![session_id, installation],
             |row| {
                 Ok(LocalUserBinding {
                     schema_version: 1,
@@ -96,14 +96,27 @@ impl CoreHandler<Rehearsal> for LocalAuthority {
         source: &SourceMetadata,
     ) -> Decision<Grants> {
         let binding = self
-            .binding(session)
+            .binding(&session.session_id, &session.installation_id)
             .map_err(|_| IngressReason::CAPABILITY_DENIED)?;
+        if binding.principal_id != self.principal {
+            return Err(IngressReason::CAPABILITY_DENIED);
+        }
         check_user_text_source(session, &binding, event, source, self.limits)
             .map_err(|_| IngressReason::CAPABILITY_DENIED)?;
         Ok(Grants {
             desktop_titles: false,
             codex_sessions: false,
         })
+    }
+    fn local_text_author(
+        &self,
+        event: &EventEnvelope,
+    ) -> gateway::Result<Option<LocalUserBinding>> {
+        // On recovery use the issuer's record for the original ingress. The
+        // principal of the current process cannot attest to an earlier event.
+        self.binding(&event.session, &event.device)
+            .optional()
+            .map_err(|_| gateway::Error::Rejected("cannot read local issuer record"))
     }
     // The trait denies controls and returns no commit results while waiting for the root.
 }

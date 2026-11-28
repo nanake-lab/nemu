@@ -301,7 +301,7 @@ fn mode_b_withheld_withdrawn_or_unattributed_text_cannot_supply_a_speaker() {
     assert!(view.mode_b_input(&known, &q, &access(), None).is_err());
     ingest(
         &mut writer,
-        &session("unproven"),
+        &session("first"),
         "withdrawal",
         "three",
         &UserRetraction {

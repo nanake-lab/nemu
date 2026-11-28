@@ -1,5 +1,5 @@
 //! Bind the local authentication service's evidence to exactly the durable event.
-use crate::{Error, Result, check};
+use crate::{Result, check};
 use core_store::{LineageKind, PreparedObject, ReadTicket, Store};
 use core_types::{generated::*, permission::check_direct_user_text, scalar::DecimalU64};
 
@@ -32,7 +32,11 @@ pub(crate) fn author_layer<L: LineageKind>(
         correction_of: event.correction_of.clone(),
         derivation: event.derivation,
     };
-    check_direct_user_text(&original, &source).map_err(Error::Contract)?;
+    if check_direct_user_text(&original, &source).is_err() {
+        // Other authorized observations still commit under their own rules.
+        // A local login cannot supply an author for those records.
+        return Ok(None);
+    }
     let payload: UserText = store.read_bound(ticket, &event.payload_ref)?;
     if payload.text.is_empty() {
         return Ok(None); // ADR 0046: a quote requires a nonempty UTF-8 span.
